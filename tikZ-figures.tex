@@ -1,0 +1,604 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{endfloat}
+\usepackage[letterpaper,landscape,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{xcolor} 
+\usepackage{tikz-network}
+\usetikzlibrary{math}
+\usetikzlibrary{positioning}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{overpic}
+\usepackage{natbib}
+\usepackage{subfig}
+\graphicspath{{converted_graphics/}}
+\usepackage[T1]{fontenc}
+\usepackage{lineno}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\begin{document}
+
+\definecolor{healthy}{HTML}{6DB33F}
+\definecolor{infested}{HTML}{CFCA7A}
+\definecolor{dead}{HTML}{8e7028}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\Vertex[x=-1,color=black]{T}
+\Vertex[opacity=.6,x=1.5,y=3,size=1,fontsize=\Large,color=healthy,label=$h$]{h}
+\Vertex[opacity=.6,x=1.5,size=1,fontsize=\Large,color=infested,label=$i$]{i} 
+\Vertex[opacity=.8,x=1.5,y=-3,size=1,fontsize=\Large,color=dead,label=$d$]{d}
+\Vertex[opacity=.6,x=6,y=3,size=1,fontsize=\Large,color=healthy,label=$\hat h$]{h_hat}
+\Vertex[opacity=.6,x=6,size=1,fontsize=\Large,color=infested,label=$\hat i$]{i_hat} 
+\Vertex[opacity=.8,x=6,y=-3,size=1,fontsize=\Large,color=dead,label=$\hat d$]{d_hat}
+
+\node[scale=.05] at (8.5, -1.25)(s_min){};
+\node[scale=.05] at (8.5, 1.25)(s_max){};
+\node[draw,circle,fill,opacity=1] at (8.7, .75)(s*){};
+
+\node[scale=.05] at (11.2, -.5)(p1_min){};
+\node[scale=.05] at (11.2, 2)(p1_max){};
+\node[draw,circle,fill] at (11.4, 0)(p1*){};
+
+\node[scale=.05] at (13.9, -1.25)(p2_min){};
+\node[scale=.05] at (13.9, 1.25)(p2_max){};
+\node[draw,circle,fill] at (14.2, .5)(p2*){};
+
+\node[scale=.05] at (17.5, .5)(t1){};
+\node[scale=.05] at (17.5, 2)(t2){};
+\node[scale=.05] at (17.5, -1)(untreated){};
+\node[draw] at (19, .5)(t2dummy){Treated by $f_2$};
+\node[draw] at (19, 2)(t1dummy){Treated by $f_1$};
+\node[draw] at (18.72, -1)(utdummy){Untreated};
+
+\node[scale=.05] at (8.5, 1.75)(sh_min){};
+\node[scale=.05] at (8.5, 4.25)(sh_max){};
+\node[draw,circle,fill,opacity=.1] at (8.7, 3.75)(sh*){};
+
+\node[scale=.05] at (11.2, 2.5)(p1h_min){};
+\node[scale=.05] at (11.2, 5)(p1h_max){};
+\node[draw,circle,fill,opacity=.1] at (11.4, 4.5)(p1h*){};
+
+\node[scale=.05] at (13.9, 5.75)(p2h_min){};
+\node[scale=.05] at (13.9, 3.25)(p2h_max){};
+\node[draw,circle,fill,opacity=.1] at (14, 3.5)(p2h*){};
+
+\node[scale=.05] at (16, 3.5)(t1h){};
+\node[scale=.05] at (16, 4.5)(t2h){};
+\node[scale=.05] at (16, 2.5)(untreatedh){};
+
+\node[scale=.05] at (8.5, -4.25)(sd_min){};
+\node[scale=.05] at (8.5, -1.75)(sd_max){};
+\node[draw,circle,fill,opacity=.1] at (8.7, -3.75)(sd*){};
+
+\node[scale=.05] at (11.2, -2.5)(p1d_min){};
+\node[scale=.05] at (11.2, -5)(p1d_max){};
+\node[draw,circle,fill,opacity=.1] at (11.4, -3)(p1d*){};
+
+\node[scale=.05] at (13.9, -4.25)(p2d_min){};
+\node[scale=.05] at (13.9, -1.75)(p2d_max){};
+\node[draw,circle,fill,opacity=.1] at (14.2, -2.5)(p2d*){};
+
+\node[scale=.05] at (16, -2.5)(t1d){};
+\node[scale=.05] at (16, -1.5)(t2d){};
+\node[scale=.05] at (16, -3.5)(untreatedd){};
+
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{35}{$P(\hat i\mid d)$}](d)(i_hat)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{0}{$P(\hat i\mid i)$}](i)(i_hat)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{-35}{$P(\hat i\mid h)$}](h)(i_hat)
+
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{50}{$P(h)$}](T)(h)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{0}{$P(i)$}](T)(i)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{-50}{$P(d)$}](T)(d)
+
+\Edge[opacity=.1](h)(h_hat)
+\Edge[opacity=.1](h)(d_hat)
+\Edge[opacity=.1](i)(h_hat)
+\Edge[opacity=.1](i)(d_hat)
+\Edge[opacity=.1](d)(h_hat)
+\Edge[opacity=.1](d)(d_hat);
+
+\Edge[opacity=.4](i_hat)(s_min)
+\Edge[opacity=.4](i_hat)(s_max)
+\Edge[opacity=.8,style={dashed}](i_hat)(s*)
+\Edge[opacity=.4,bend=-30](s_min)(s_max)
+
+\Edge[opacity=.4](s*)(p1_max)
+\Edge[opacity=.4](s*)(p1_min)
+\Edge[opacity=.8,style={dashed}](s*)(p1*)
+\Edge[opacity=.4,bend=-30](p1_min)(p1_max)
+
+\Edge[opacity=.4](p1*)(p2_max)
+\Edge[opacity=.4](p1*)(p2_min)
+\Edge[opacity=.8,style={dashed}](p1*)(p2*)
+\Edge[opacity=.4,bend=-30](p2_min)(p2_max)
+
+\Edge[opacity=.8,style={dashed}](p2*)(t2)
+\Edge[opacity=.4](p2*)(t1)
+\Edge[opacity=.4](p2*)(untreated)
+
+\Edge[opacity=.1](h_hat)(sh_min)
+\Edge[opacity=.1](h_hat)(sh_max)
+\Edge[opacity=.1,bend=-30](sh_min)(sh_max)
+
+\Edge[opacity=.1](sh*)(p1h_max)
+\Edge[opacity=.1](sh*)(p1h_min)
+\Edge[opacity=.1,bend=-30](p1h_min)(p1h_max)
+
+\Edge[opacity=.1](p1h*)(p2h_max)
+\Edge[opacity=.1](p1h*)(p2h_min)
+\Edge[opacity=.1,bend=30](p2h_min)(p2h_max)
+
+\Edge[opacity=.1](p2h*)(t1h)
+\Edge[opacity=.1](p2h*)(t2h)
+\Edge[opacity=.1](p2h*)(untreatedh)
+
+\Edge[opacity=.1](d_hat)(sd_min)
+\Edge[opacity=.1](d_hat)(sd_max)
+\Edge[opacity=.1,bend=-30](sd_min)(sd_max)
+
+\Edge[opacity=.1](sd*)(p1d_max)
+\Edge[opacity=.1](sd*)(p1d_min)
+\Edge[opacity=.1,bend=30](p1d_min)(p1d_max)
+
+\Edge[opacity=.1](p1d*)(p2d_max)
+\Edge[opacity=.1](p1d*)(p2d_min)
+\Edge[opacity=.1,bend=-30](p2d_min)(p2d_max)
+
+\Edge[opacity=.1](p2d*)(t1d)
+\Edge[opacity=.1](p2d*)(t2d)
+\Edge[opacity=.1](p2d*)(untreatedd)
+%text
+\Text[x=8,y=0,fontsize=\large]{$(s_{1\hat i},s_{2\hat i})$}
+\Text[x=11,y=.4,fontsize=\large]{$p_{1\hat i}$}
+\Text[x=13.8,y=.15,fontsize=\large]{$p_{2\hat i}$}
+\Text[x=0,y=5.5,fontsize=\Large]{Underlying}
+\Text[x=0,y=5,fontsize=\Large]{tree states}
+\Text[x=4,y=5.5,fontsize=\Large]{Tree}
+\Text[x=4,y=5,fontsize=\Large]{Assessment}
+\Text[x=7.75,y=5.5,fontsize=\Large]{Municipal}
+\Text[x=7.75,y=5,fontsize=\Large]{subsidies}
+\Text[x=11.75,y=5.5,fontsize=\Large]{Simultaneous}
+\Text[x=11.75,y=5,fontsize=\Large]{firm bids}
+\Text[x=17,y=5.5,fontsize=\Large]{Tree owner}
+\Text[x=17,y=5,fontsize=\Large]{choices}
+\Text[x=10,y=-1,fontsize=\Large]{$f_1$ bid}
+\Text[x=13,y=-1,fontsize=\Large]{$f_2$ bid}
+
+\draw [-latex](1.5,5.25) -- (2.5,5.25);
+\draw [-latex](5.35,5.25) -- (6.5,5.25);
+\draw [-latex](8.95,5.25) -- (10,5.25);
+\draw [-latex](13.5,5.25) -- (15.5,5.25);
+
+\end{tikzpicture}
+\end{center}
+\caption{Main text Figure 1}
+\end{figure}
+\definecolor{col1}{HTML}{D81B60}
+\definecolor{col2}{HTML}{004D40}
+%D81B60
+%004D40
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 10,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+%PARAMS
+\tikzmath{\ak=1.5;\bk=7;\c=10;\so=7;\st=7;\eps=.2;\pop=1/2*(\bk+\c-\so);\ptp=1/2*(\bk+\c-\st);}
+% best response  curves
+\addplot[color =col1, very thick] coordinates {(0,\c-\st) (\c-\st+\eps,\c-\st)(\ptp+\eps,\ptp)(10,\ptp)};
+\addplot[color = col2, very thick] coordinates {(\c-\so,0) (\c-\so,\c-\so+\eps) (\pop,\pop+\eps)(\pop,10)};
+\fill [color=col1,opacity=.1] (0,\c-\st) rectangle (\c-\st-\eps,10);
+\fill [color=col2,opacity=.1] (\c-\so,0) rectangle (10,\c-\so-\eps);
+
+% Equilibrium points
+%\addplot[color = black, mark = *, only marks, mark size = 3pt] coordinates {(\c-\so, \c-\so)};
+\node [right] at (\c-\so, \c-\so-\eps-.5) {$(p_1^*,p_2^*)$};
+\draw [rounded corners=3,very thick] (\c-\so-.2, \c-\so-.25) rectangle ++(.4,.5) node [midway]{};
+% Dashed lines
+\addplot[color = black, dashed, thick] coordinates {(0, 0) (10, 10) };
+\addplot[color = black, dashed] coordinates {(\pop, 0) (\pop, \pop)  };
+\addplot[color = black, dashed] coordinates {(0,\ptp) (\ptp, \ptp)  };
+\addplot[color = black, dashed] coordinates {(0, \bk) (\bk, \bk) (\bk,0) };
+\addplot[color = black, dashed] coordinates {(0, \ak) (\ak, \ak) (\ak,0) };
+
+
+% Labels
+\node [right] at (current axis.right of origin){$p_1$};
+\node [above] at (current axis.above origin) {$p_2$};
+
+\node [above] at (\pop, 10) {$\hat{p}_1(p_2)$};
+\node [right] at (10, \ptp) {$\hat{p}_2(p_1)$};
+
+\node [left] at (0, \c-\st) {$c-s_{\hat\phi}$};
+\node [below,rotate=-60] at (\c-\so+.75, -1) {$c-s_{\hat\phi}$};
+\node [left] at (0,\ptp) {$p_2'$};
+\node [below,rotate=-60] at (\pop+.75, -.35) {$p_1'$};
+\node [left] at (0,\bk) {$bk_{\hat\phi}$};
+\node [below,rotate=-60] at (\bk+.75, -.50) {$bk_{\hat\phi}$};
+
+\node [left] at (0,\ak) {$ak_{\hat\phi}$};
+\node [below,rotate=-60] at (\ak+.75, -.5) {$ak_{\hat\phi}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Main text Figure 2 ($ak_{\hat\phi}=1.5$, $bk_{\hat\phi}=7$ $c=10$, $s_{1\hat\phi}=s_{2\hat\phi}=s_{\hat\phi}=7$) }
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 10,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+\tikzmath{\ak=3;\bk=7;\c=10;\so=6;\st=8;\eps=.2;\pop=1/2*(\bk+\c-\so);\ptp=1/2*(\bk+\c-\st);}
+
+% best response  curves
+\addplot[color =col1, very thick] coordinates {(0,\c-\st) (\c-\st+\eps,\c-\st)(\ptp+\eps,\ptp)(10,\ptp)};
+\addplot[color = col2, very thick] coordinates {(\c-\so,0) (\c-\so,\c-\so+\eps) (\pop,\pop+\eps)(\pop,10)};
+\fill [color=col1,opacity=.1] (0,\c-\st) rectangle (\c-\st-\eps,10);
+\fill [color=col2,opacity=.1] (\c-\so,0) rectangle (10,\c-\so-\eps);
+
+% Equilibrium points
+%\addplot[color = black, mark = *, only marks, mark size = 3pt] coordinates {(\c-\so, \c-\so-\eps)};
+\node [right] at (\c-\so, \c-\so-\eps-.5) {$(p_1^*,p_2^*)$};
+\draw [rounded corners=3,very thick] (\c-\so-.2, \c-\so-\eps-.25) rectangle ++(.4,.5) node [midway]{};
+% Dashed lines
+\addplot[color = black, dashed, thick] coordinates {(0, 0) (10, 10) };
+\addplot[color = black, dashed] coordinates {(\pop, 0) (\pop, \pop)  };
+\addplot[color = black, dashed] coordinates {(0,\ptp) (\ptp, \ptp)  };
+\addplot[color = black, dashed] coordinates {(0, \bk) (\bk, \bk) (\bk,0) };
+\addplot[color = black, dashed] coordinates {(0, \ak) (\ak, \ak) (\ak,0) };
+
+
+% Labels
+\node [right] at (current axis.right of origin){$p_1$};
+\node [above] at (current axis.above origin) {$p_2$};
+
+\node [above] at (\pop, 10) {$\hat{p}_1(p_2)$};
+\node [right] at (10, \c-\st) {$\hat{p}_2(p_1)$};
+
+\node [left] at (0, \c-\st) {$c-s_{2\hat\phi}$};
+\node [below,rotate=-60] at (\c-\so+.75, -1) {$c-s_{1\hat\phi}$};
+\node [left] at (0,\ptp) {$p_2'$};
+\node [below,rotate=-60] at (\pop+.75, -.35) {$p_1'$};
+\node [left] at (0,\bk) {$bk_{\hat\phi}$};
+\node [below,rotate=-60] at (\bk+.75, -.50) {$bk_{\hat\phi}$};
+
+\node [left] at (0,\ak) {$ak_{\hat\phi}$};
+\node [below,rotate=-60] at (\ak+.75, -.5) {$ak_{\hat\phi}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Main Text Figure 3a ($ak_{\hat\phi}=3$, $bk_{\hat\phi}=7$ $c=10$, $s_{1\hat\phi}=6$, $s_{2\hat\phi}=8$)}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 10,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+\tikzmath{\ak=3;\bk=7;\c=10;\so=5.5;\st=1.5;\eps=.2;\pop=1/2*(\bk+\c-\so);}
+% best response  curves
+\addplot[color =col1, very thick] coordinates {(0,\c-\st) (10,\c-\st)};
+\addplot[color = col2, very thick] coordinates {(\c-\so,0) (\c-\so,\c-\so+\eps) (\pop,\pop+\eps)(\pop,10)};
+\fill [color=col1,opacity=.1] (0,\c-\st) rectangle (10,10);
+\fill [color=col2,opacity=.1] (\c-\so,0) rectangle (10,\c-\so-\eps);
+
+% Dashed lines
+\addplot[color = black, dashed, thick] coordinates {(0, 0) (10, 10) };
+\addplot[color = black, dashed] coordinates {(\pop, 0) (\pop, \pop)  };
+\addplot[color = black, dashed] coordinates {(0, \bk) (\bk, \bk) (\bk,0) };
+\addplot[color = black, dashed] coordinates {(0, \ak) (\ak, \ak) (\ak,0) };
+
+
+% Labels
+\node [right] at (current axis.right of origin){$p_1$};
+\node [above] at (current axis.above origin) {$p_2$};
+
+\node [above] at (\pop, 10) {$\hat{p}_1(p_2)$};
+\node [right] at (10, \c-\st) {$\hat{p}_2(p_1)$};
+
+\node [left] at (0, \c-\st) {$c-s_{2\hat\phi}$};
+\node [below,rotate=-60] at (\c-\so+.95, -1) {$c-s_{1\hat\phi}$};
+ 
+ \draw [rounded corners=3,very thick] (\pop-.2,\c-\st-.25) rectangle ++(.4,1.9) node [midway]{ };
+ 
+\node [below,rotate=-60] at (\pop+.75, -.35) {$p_1'$};
+\node [left] at (0,\bk) {$bk_{\hat\phi}$};
+\node [below,rotate=-60] at (\bk+.75, -.50) {$bk_{\hat\phi}$};
+
+\node [left] at (0,\ak) {$ak_{\hat\phi}$};
+\node [below,rotate=-60] at (\ak+.75, -.5) {$ak_{\hat\phi}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Main Text Figure 3b.($ak_{\hat\phi}=3$, $bk_{\hat\phi}=7$ $c=10$, $s_{1\hat\phi}=5.5$, $s_{2\hat\phi}=1.5$)}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 10,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+\tikzmath{\ak=3;\bk=6;\c=10;\so=3;\st=1.5;}
+% best response  curves
+\addplot[color =col1, very thick] coordinates {(0,\c-\st) (10,\c-\st)};
+\addplot[color = col2, very thick] coordinates {(\c-\so,0) (\c-\so,10)};
+\fill [color=col1,opacity=.1] (0,\c-\st) rectangle (10,10);
+\fill [color=col2,opacity=.1] (\c-\so,0) rectangle (10,10);
+% Equilibrium points
+\draw [rounded corners=3,very thick] (\c-\so-.2,\c-\st-.25) rectangle ++(10.3-\c+\so,1.9) node [midway]{};
+
+%\addplot[color = black, mark = *, only marks, mark size = 3pt] coordinates {(6, 8.5)};
+
+% Dashed lines
+\addplot[color = black, dashed, thick] coordinates {(0, 0) (10, 10) };
+%\addplot[color = black, dashed] coordinates {(6, 0) (6, 6)  };
+%\addplot[color = black, dashed] coordinates {(0, 4.5) (4.5, 4.5) (4.5,0) };
+%\addplot[color = black, dashed] coordinates {(0, 3.5) (3.5, 3.5) (3.5,0) };
+\addplot[color = black, dashed] coordinates {(0, \bk) (\bk, \bk) (\bk,0) };
+\addplot[color = black, dashed] coordinates {(0, \ak) (\ak, \ak) (\ak,0) };
+%\addplot[color = black, dashed] coordinates {(0, 8.5) (8.5, 8.5) (8.5,0) };
+
+
+
+% Labels
+\node [right] at (current axis.right of origin){$p_1$};
+\node [above] at (current axis.above origin) {$p_2$};
+
+\node [above] at (7.75, 10) {$\hat{p}_1(p_2)$};
+\node [right] at (10, 8.75) {$\hat{p}_2(p_1)$};
+
+%\node [right] at (3.5, 3) {$(p_1^*,p_2^*)$};
+
+\node [left] at (0, 8.5) {$c-s_{2\hat\phi}$};
+\node [below,rotate=-60] at (8, -1) {$c-s_{1\hat\phi}$};
+
+%\node [left] at (0, 6) {$p_1'$};
+%\node [below,rotate=-60] at (6.75, -.35) {$p_1'$};
+
+%\node [left] at (0, 4.5) {$p_2'$};
+%\node [below] at (6, 0) {$p_1'$};
+
+\node [left] at (0,6) {$bk_{\hat\phi}$};
+\node [below,rotate=-60] at (6.75, -.50) {$bk_{\hat\phi}$};
+
+\node [left] at (0,3) {$ak_{\hat\phi}$};
+\node [below,rotate=-60] at (3.75, -.5) {$ak_{\hat\phi}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Main Text Figure 3b. ($ak_{\hat\phi}=3$, $bk_{\hat\phi}=6$ $c=10$, $s_{1\hat\phi}=3$, $s_{2\hat\phi}=1.5$)}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 10,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+\tikzmath{\ak=1.5;\bk=9;\c=10;\so=7.5;\sta=.5;\stb=3;\stc=5.75;\std=7.5;\eps=.2;\pop=1/2*(\bk+\c-\so);}
+
+% Supply and demand curves
+%\addplot[color =col1, very thick,opacity=.85] coordinates {(0,2.5) (2.7,2.5)(5.95,5.75)(10,5.75)};
+\addplot[color =col1, very thick,opacity=.85] coordinates {(0,\c-\std) (\c-\std+\eps,\c-\std)(.5*(\bk+\c-\std)+\eps,1/2*\bk+.5*\c-.5*\std) (10,1/2*\bk+1/2*\c-1/2*\std)};
+\addplot[color =col1, very thick,opacity=.5] coordinates {(0,\c-\stc) (\c-\stc+\eps,\c-\stc)(.5*(\bk+\c-\stc)+\eps,1/2*\bk+.5*\c-.5*\stc) (10,1/2*\bk+1/2*\c-1/2*\stc)};
+\addplot[color =col1, very thick,opacity=.25] coordinates {(0,\c-\stb) (\c-\stb+\eps,\c-\stb)(.5*(\bk+\c-\stb)+\eps,1/2*\bk+.5*\c-.5*\stb) (10,1/2*\bk+1/2*\c-1/2*\stb)};
+\addplot[color =col1, very thick,opacity=.125] coordinates {(0,\c-\sta) (10,\c-\sta)};
+% \addplot[color = col1, very thick,opacity=.125] coordinates {(0,9.5) (10,9.5)};
+% %\addplot[color =col1, very thick,opacity=.5] coordinates {(0,4.25) (4.45,4.25)(6.825,6.625)(10,6.625)};
+% \addplot[color =col1, very thick,opacity=.25] coordinates {(0,7) (7.2,7)(8.2,8)(10,8)};
+
+\addplot[color = col2, very thick] coordinates {(\c-\so,0) (\c-\so,\c-\so+\eps) (\pop,\pop+\eps)(\pop,10)};
+%\fill [color=col1,opacity=.1] (0,1.5) rectangle (1.3,10);
+%\fill [color=col2,opacity=.1] (3.5,0) rectangle (10,3.3);
+
+
+% Dashed lines
+\addplot[color = black, dashed, thick] coordinates {(0, 0) (10, 10) };
+\addplot[color = black, dashed] coordinates {(\pop, 0) (\pop, \pop)  };
+%\addplot[color = black, dashed] coordinates {(0, 4.5) (4.5, 4.5) };
+%\addplot[color = black, dashed] coordinates {(0, 3.5) (3.5, 3.5) (3.5,0) };
+\addplot[color = black, dashed] coordinates {(0, \bk) (\bk, \bk) (\bk,0) };
+%\addplot[color = black, dashed] coordinates {(0, 3) (3, 3) (3,0) };
+\addplot[color = black, dashed] coordinates {(0, \ak) (
+\ak, \ak) (\ak,0) };
+
+% Coordinate points
+\addplot[color = black, mark = *, only marks, mark size = 3pt,opacity=.9] coordinates {(\c-\so, \c-\std)};
+\addplot[color = black, mark = *, only marks, mark size = 3pt,opacity=.5] coordinates {(\c-\stc-\eps,\c-\stc)};
+\addplot[color = black, mark = *, only marks, mark size = 3pt,opacity=.25] coordinates {(\pop, \c-\stb)};
+\addplot[color = black, mark = *, only marks, mark size = 3pt,opacity=.125] coordinates {(\pop, \c-\sta)};
+
+% Labels
+\node [right] at (current axis.right of origin){$p_1$};
+\node [above] at (current axis.above origin) {$p_2$};
+
+\node [above] at (6, 10) {$\hat{p}_1(p_2)$};
+\node [right] at (10.25, 7.65) {$\hat{p}_2(p_1)$};
+
+\usetikzlibrary{decorations.pathreplacing}
+\draw[decorate,decoration={brace,amplitude=0.15cm}]  (10,9.75) -- (10,5.5);  
+
+%\node [right] at (3.5, 3) {$(p_1^*,p_2^*)$};
+
+%\node [left] at (0, 1.5) {$c-s_{2\hat\phi}$};
+\node [below,rotate=-60] at (\c-\so+.95, -1) {$c-s_{1\hat\phi}$};
+
+%\node [left] at (0, 6) {$p_1'$};
+\node [below,rotate=-60] at (\pop+.75, -.35) {$p_1'$};
+
+%\node [left] at (0, 4.5) {$p_2'$};
+%\node [below] at (6, 0) {$p_1'$};
+
+\node [left] at (0,\bk) {$bk_{\hat\phi}$};
+\node [below,rotate=-60] at (\bk+.75, -.50) {$bk_{\hat\phi}$};
+
+\node [left] at (0,\ak) {$ak_{\hat\phi}$};
+\node [below,rotate=-60] at (\ak+.75, -0.5) {$ak_{\hat\phi}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{SI Figure 1a  ($ak_{\hat\phi}=1.5$, $bk_{\hat\phi}=9.5$ $c=10$, $s_{1\hat\phi}=7.5$) }
+\end{figure}
+
+
+\definecolor{ucol1}{HTML}{b7e6a5}
+\definecolor{ucol2}{HTML}{089099}
+\definecolor{ucol3}{HTML}{003147}
+
+
+
+\begin{figure}
+\centering        
+\begin{tikzpicture}
+\tikzmath{\xmax=4;\ymax=7.5;}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = \xmax,
+ymin = 0, ymax = \ymax,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+\tikzmath{\ak=7;\bk=9;\c=10;\Piu=4;}
+%Axis Labels
+\node [right] at (\xmax,-.2){$s_{\hat\phi}$};
+\node [above] at (0,\ymax) {$E\left[U_m\right]$};
+%Tick Markers
+\addplot[color = black, dashed, thick] coordinates {(\c-\bk, 0) (\c-\bk,\ymax) };
+\addplot[color = black, dashed, thick] coordinates {(\c-\ak, 0) (\c-\ak, \ymax) };
+\node [below,rotate=-60] at (\c-\bk+.4,-.85) {$c-bk_{\hat\phi}$};
+\node [below,rotate=-60] at (\c-\ak+.4, -.85) {$c-ak_{\hat\phi}$};
+
+%Utility curves
+\tikzmath{\Btl=.8;}
+  \draw[scale=1, domain=0:\c-\bk, smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu});
+  \draw[scale=1, domain=\c-\bk:\c-\ak, smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+(\Btl-\s)*(\bk-\c+\s)/(\bk-\ak)});
+    \draw[scale=1, domain=\c-\ak:\xmax, smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+\Btl-\s});
+
+\tikzmath{\Btm=3.5;}
+  \draw[scale=1, domain=0:\c-\bk, smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu});
+  \draw[scale=1, domain=\c-\bk:\c-\ak, smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+(\Btm-\s)*(\bk-\c+\s)/(\bk-\ak)});
+    \draw[scale=1, domain=\c-\ak:\xmax, smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+\Btm-\s});
+
+\tikzmath{\Bth=6;}
+  \draw[scale=1, domain=0:\c-\bk, smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu});
+  \draw[scale=1, domain=\c-\bk:\c-\ak, smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+(\Bth-\s)*(\bk-\c+\s)/(\bk-\ak)});
+    \draw[scale=1, domain=\c-\ak:\xmax, smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+\Bth-\s});
+
+\tikzmath{\yh=\Piu+\Bth-\xmax;\ym=\Piu+\Btm-\xmax;\yl=\Piu+\Btl-\xmax;}
+%Curve labels
+\node [right] at (\xmax,\yh) {$E\left[U_m(B_{t\hat\phi}=\Bth)\right]$};
+\node [right] at (\xmax,\ym) {$E\left[U_m(B_{t\hat\phi}=\Btm)\right]$};
+\node [right] at (\xmax,\yl) {$E\left[U_m(B_{t\hat\phi}=\Btl)\right]$};
+\node [left] at (0,\Piu) {$\Pi_{u\hat\phi}$};
+  \end{axis}
+\end{tikzpicture}
+\caption{Main text Figure 4 ($c=10$, $ak_{\hat\phi}=7$, $bk_{\hat\phi}=9$, $\Pi_{u\hat\phi}=4$)}
+\label{fig:muniUtil}
+\end{figure}
+
+
+
+
+
+\begin{figure}
+\centering        
+\begin{tikzpicture}
+\begin{axis}[
+scale = .75,
+xmin = 0, xmax = 10,
+ymin = 0, ymax = 12,
+axis lines* = left,
+xtick = {0}, ytick = \empty,
+clip = false,
+]
+
+%Axis Labels
+\node [right] at (10,-.3){$s_{2\hat\phi}$};
+\node [above] at (0,12) {$E\left[U_m\right]$};
+%Tick Markers
+\addplot[color = black, dashed, thick] coordinates {(4.25, 0) (4.25, 12) };
+\addplot[color = black, dashed, thick] coordinates {(7.5, 0) (7.5, 12) };
+\node [below,rotate=-60] at (5.25,-1.25) {$c-p'_{1\hat\phi}$};
+\node [below,rotate=-60] at (8, -.75) {$s_{1\hat\phi}$};
+
+%Utility curves
+\tikzmath{\ak=1.5;\bk=9;\c=10;\so=7.5;\Piu=1;}
+% B_t = 20
+\tikzmath{\Bth = 20;}
+  \draw[scale=1, domain=0:0.5*(\c-\bk+\so), smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Bth-\so)*(\bk-\c+\so))/(2*(\bk-\ak))});
+  \draw[scale=1, domain=0.5*(\c-\bk+\so):\so, smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Bth-\so)*(\bk-\c+\s))/(\bk-\ak)});
+    \draw[scale=1, domain=\so:10, smooth, variable=\s, ucol3,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Bth-\s)*(\bk-\c+\so))/(\bk-\ak)});
+% B_t = 10
+\tikzmath{\Btl = 10;}
+  \draw[scale=1, domain=0:0.5*(\c-\bk+\so), smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btl-\so)*(\bk-\c+\so))/(2*(\bk-\ak))});
+  \draw[scale=1, domain=0.5*(\c-\bk+\so):\so, smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btl-\so)*(\bk-\c+\s))/(\bk-\ak)});
+    \draw[scale=1, domain=\so:10, smooth, variable=\s, ucol1,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btl-\s)*(\bk-\c+\so))/(\bk-\ak)});
+% B_t = 15
+\tikzmath{\Btm = 15;} 
+  \draw[scale=1, domain=0:0.5*(\c-\bk+\so), smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btm-\so)*(\bk-\c+\so))/(2*(\bk-\ak))});
+  \draw[scale=1, domain=0.5*(\c-\bk+\so):\so, smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btm-\so)*(\bk-\c+\s))/(\bk-\ak)});
+    \draw[scale=1, domain=\so:10, smooth, variable=\s, ucol2,opacity=.65,line width=.7mm] plot ({\s}, {\Piu+((\Btm-\s)*(\bk-\c+\so))/(\bk-\ak)});
+
+
+%Curve labels
+\node [right] at (10,9.5) {$E\left[U_m(B_{t\hat\phi}=20)\right]$};
+ \node [right] at (10,5) {$E\left[U_m(B_{t\hat\phi}=15)\right]$};
+ \node [right] at (10,1.1) {$E\left[U_m(B_{t\hat\phi}=10)\right]$};
+% \node [left] at (0,4) {$\Pi_{u\hat\phi}$};
+  \end{axis}
+\end{tikzpicture}
+\caption{SI Figure 1b($s_{1\hat\phi}=7.5$, $ak_{\hat\phi}=1.5$, $bk_{\hat\phi}=9.5$, $c=10$, $\Pi_{u\phi}=1$) }
+\label{fig:muniUtiluneqSub}
+\end{figure}
+
+
+\end{document}
