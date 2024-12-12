@@ -1,13 +1,24 @@
 \documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
 \usepackage[english]{babel}
 \usepackage{endfloat}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
 \usepackage[letterpaper,landscape,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-\usepackage{xcolor} 
+
+% Useful packages
+\usepackage{xcolor} % package crucial to implement colors  
+%\usepackage{tikz} % package used for the tikz  
 \usepackage{tikz-network}
 \usetikzlibrary{math}
+%\usepackage{tikzsymbols}
 \usetikzlibrary{positioning}
+%\usepackage{istgame}
 \usepackage{amsmath}
 \usepackage{graphicx}
+
 \usepackage{overpic}
 \usepackage{natbib}
 \usepackage{subfig}
@@ -15,6 +26,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{lineno}
 \usepackage{setspace}
+%\usepackage{appendix}
+%\usepackage{endfloat}
 \usepackage{amssymb}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -25,6 +38,160 @@
 \definecolor{healthy}{HTML}{6DB33F}
 \definecolor{infested}{HTML}{CFCA7A}
 \definecolor{dead}{HTML}{8e7028}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\Vertex[x=-1,color=black]{T}
+\Vertex[opacity=.6,x=1.5,y=3,size=1,fontsize=\Large,color=healthy,label=$h$]{h}
+\Vertex[opacity=.6,x=1.5,size=1,fontsize=\Large,color=infested,label=$i$]{i} 
+\Vertex[opacity=.8,x=1.5,y=-3,size=1,fontsize=\Large,color=dead,label=$d$]{d}
+\Vertex[opacity=.6,x=6,y=3,size=1,fontsize=\Large,color=healthy,label=$\hat h$]{h_hat}
+\Vertex[opacity=.6,x=6,size=1,fontsize=\Large,color=infested,label=$\hat i$]{i_hat} 
+\Vertex[opacity=.8,x=6,y=-3,size=1,fontsize=\Large,color=dead,label=$\hat d$]{d_hat}
+
+\node[scale=.05] at (8.5, -1.25)(s_min){};
+\node[scale=.05] at (8.5, 1.25)(s_max){};
+\node[draw,circle,fill,opacity=1] at (8.8, 0.25)(s*){};
+
+% \node[scale=.05] at (11.2, -.5)(p1_min){};
+% \node[scale=.05] at (11.2, 2)(p1_max){};
+% \node[draw,circle,fill] at (11.4, 0)(p1*){};
+
+% \node[scale=.05] at (13.9, -1.25)(p2_min){};
+% \node[scale=.05] at (13.9, 1.25)(p2_max){};
+% \node[draw,circle,fill] at (14.2, .5)(p2*){};
+
+% \node[scale=.05] at (17.5, .5)(t1){};
+\node[scale=.05] at (10.65, 1)(t2){};
+\node[scale=.05] at (10.65, -.5)(untreated){};
+% \node[draw] at (19, .5)(t2dummy){Treated by $f_2$};
+\node[draw] at (11.58, 1)(t1dummy){Treated};
+\node[draw] at (11.72, -0.5)(utdummy){Untreated};
+
+\node[scale=.05] at (8.5, 1.75)(sh_min){};
+\node[scale=.05] at (8.5, 4.25)(sh_max){};
+\node[draw,circle,fill,opacity=.1] at (8.7, 3.75)(sh*){};
+
+% \node[scale=.05] at (11.2, 2.5)(p1h_min){};
+% \node[scale=.05] at (11.2, 5)(p1h_max){};
+% \node[draw,circle,fill,opacity=.1] at (11.4, 4.5)(p1h*){};
+
+% \node[scale=.05] at (13.9, 5.75)(p2h_min){};
+% \node[scale=.05] at (13.9, 3.25)(p2h_max){};
+% \node[draw,circle,fill,opacity=.1] at (14, 3.5)(p2h*){};
+
+% \node[scale=.05] at (16, 3.5)(t1h){};
+\node[scale=.05] at (10.6, 4.5)(t2h){};
+\node[scale=.05] at (10.6, 3.5)(untreatedh){};
+
+\node[scale=.05] at (8.5, -4.25)(sd_min){};
+\node[scale=.05] at (8.5, -1.75)(sd_max){};
+\node[draw,circle,fill,opacity=.1] at (8.7, -3.75)(sd*){};
+
+% \node[scale=.05] at (11.2, -2.5)(p1d_min){};
+% \node[scale=.05] at (11.2, -5)(p1d_max){};
+% \node[draw,circle,fill,opacity=.1] at (11.4, -3)(p1d*){};
+
+% \node[scale=.05] at (13.9, -4.25)(p2d_min){};
+% \node[scale=.05] at (13.9, -1.75)(p2d_max){};
+% \node[draw,circle,fill,opacity=.1] at (14.2, -2.5)(p2d*){};
+
+% \node[scale=.05] at (16, -2.5)(t1d){};
+\node[scale=.05] at (10.6, -3.25)(t2d){};
+\node[scale=.05] at (10.6, -4.25)(untreatedd){};
+
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{35}{$P(\hat i\mid d)$}](d)(i_hat)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{0}{$P(\hat i\mid i)$}](i)(i_hat)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{-35}{$P(\hat i\mid h)$}](h)(i_hat)
+
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{50}{$P(h)$}](T)(h)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{0}{$P(i)$}](T)(i)
+\Edge[opacity=.8,fontsize=\large,label=\rotatebox{-50}{$P(d)$}](T)(d)
+
+\Edge[opacity=.1](h)(h_hat)
+\Edge[opacity=.1](h)(d_hat)
+\Edge[opacity=.1](i)(h_hat)
+\Edge[opacity=.1](i)(d_hat)
+\Edge[opacity=.1](d)(h_hat)
+\Edge[opacity=.1](d)(d_hat);
+
+\Edge[opacity=.4](i_hat)(s_min)
+\Edge[opacity=.4](i_hat)(s_max)
+\Edge[opacity=.8,style={dashed}](i_hat)(s*)
+\Edge[opacity=.4,bend=-30](s_min)(s_max)
+
+% \Edge[opacity=.4](s*)(p1_max)
+% \Edge[opacity=.4](s*)(p1_min)
+% \Edge[opacity=.8,style={dashed}](s*)(p1*)
+% \Edge[opacity=.4,bend=-30](p1_min)(p1_max)
+
+% \Edge[opacity=.4](p1*)(p2_max)
+% \Edge[opacity=.4](p1*)(p2_min)
+% \Edge[opacity=.8,style={dashed}](p1*)(p2*)
+% \Edge[opacity=.4,bend=-30](p2_min)(p2_max)
+
+\Edge[opacity=.8,style={dashed}](s*)(t2)
+% \Edge[opacity=.4](p2*)(t1)
+\Edge[opacity=.4](s*)(untreated)
+
+\Edge[opacity=.1](h_hat)(sh_min)
+\Edge[opacity=.1](h_hat)(sh_max)
+\Edge[opacity=.1,bend=-30](sh_min)(sh_max)
+
+% \Edge[opacity=.1](sh*)(p1h_max)
+% \Edge[opacity=.1](sh*)(p1h_min)
+% \Edge[opacity=.1,bend=-30](p1h_min)(p1h_max)
+
+% \Edge[opacity=.1](p1h*)(p2h_max)
+% \Edge[opacity=.1](p1h*)(p2h_min)
+% \Edge[opacity=.1,bend=30](p2h_min)(p2h_max)
+
+% \Edge[opacity=.1](sh*)(t1h)
+\Edge[opacity=.1](sh*)(t2h)
+\Edge[opacity=.1](sh*)(untreatedh)
+
+\Edge[opacity=.1](d_hat)(sd_min)
+\Edge[opacity=.1](d_hat)(sd_max)
+\Edge[opacity=.1,bend=-30](sd_min)(sd_max)
+
+% \Edge[opacity=.1](sd*)(p1d_max)
+% \Edge[opacity=.1](sd*)(p1d_min)
+% \Edge[opacity=.1,bend=30](p1d_min)(p1d_max)
+
+% \Edge[opacity=.1](p1d*)(p2d_max)
+% \Edge[opacity=.1](p1d*)(p2d_min)
+% \Edge[opacity=.1,bend=-30](p2d_min)(p2d_max)
+
+% \Edge[opacity=.1](p2d*)(t1d)
+\Edge[opacity=.1](sd*)(t2d)
+\Edge[opacity=.1](sd*)(untreatedd)
+%text
+\Text[x=8.4,y=.55,fontsize=\large]{$s_{\hat i}$}
+% \Text[x=11,y=.4,fontsize=\large]{$p_{1\hat i}$}
+% \Text[x=13.8,y=.15,fontsize=\large]{$p_{2\hat i}$}
+\Text[x=0,y=5.5,fontsize=\Large]{Underlying}
+\Text[x=0,y=5,fontsize=\Large]{tree states}
+\Text[x=4,y=5.5,fontsize=\Large]{Tree}
+\Text[x=4,y=5,fontsize=\Large]{Assessment}
+\Text[x=7.75,y=5.5,fontsize=\Large]{Municipal}
+\Text[x=7.75,y=5,fontsize=\Large]{subsidies}
+\Text[x=11.75,y=5.5,fontsize=\Large]{Tree owner}
+\Text[x=11.75,y=5,fontsize=\Large]{choices}
+% \Text[x=17,y=5.5,fontsize=\Large]{Tree owner}
+% \Text[x=17,y=5,fontsize=\Large]{choices}
+% \Text[x=10,y=-1,fontsize=\Large]{$f_1$ bid}
+% \Text[x=13,y=-1,fontsize=\Large]{$f_2$ bid}
+
+\draw [-latex](1.5,5.25) -- (2.5,5.25);
+\draw [-latex](5.35,5.25) -- (6.5,5.25);
+\draw [-latex](8.95,5.25) -- (10,5.25);
+% \draw [-latex](13.5,5.25) -- (15.5,5.25);
+
+\end{tikzpicture}
+\end{center}
+\caption{Main text Figure 1}
+\end{figure}
 
 \begin{figure}
 \begin{center}
@@ -177,7 +344,7 @@
 
 \end{tikzpicture}
 \end{center}
-\caption{Main text Figure 1}
+\caption{SM Figure 1}
 \end{figure}
 \definecolor{col1}{HTML}{D81B60}
 \definecolor{col2}{HTML}{004D40}
@@ -535,9 +702,9 @@ clip = false,
 
 \tikzmath{\yh=\Piu+\Bth-\xmax;\ym=\Piu+\Btm-\xmax;\yl=\Piu+\Btl-\xmax;}
 %Curve labels
-\node [right] at (\xmax,\yh) {$E\left[U_m(B_{t\hat\phi}=\Bth)\right]$};
-\node [right] at (\xmax,\ym) {$E\left[U_m(B_{t\hat\phi}=\Btm)\right]$};
-\node [right] at (\xmax,\yl) {$E\left[U_m(B_{t\hat\phi}=\Btl)\right]$};
+\node [right] at (\xmax,\yh) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=\Bth)\right]$};
+\node [right] at (\xmax,\ym) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=\Btm)\right]$};
+\node [right] at (\xmax,\yl) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=\Btl)\right]$};
 \node [left] at (0,\Piu) {$\Pi_{u\hat\phi}$};
   \end{axis}
 \end{tikzpicture}
@@ -590,9 +757,9 @@ clip = false,
 
 
 %Curve labels
-\node [right] at (10,9.5) {$E\left[U_m(B_{t\hat\phi}=20)\right]$};
- \node [right] at (10,5) {$E\left[U_m(B_{t\hat\phi}=15)\right]$};
- \node [right] at (10,1.1) {$E\left[U_m(B_{t\hat\phi}=10)\right]$};
+\node [right] at (10,9.5) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=20)\right]$};
+ \node [right] at (10,5) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=15)\right]$};
+ \node [right] at (10,1.1) {$E\left[U_m(\Delta_m\left(k_{\hat d} + l_{\hat d}\right)=10)\right]$};
 % \node [left] at (0,4) {$\Pi_{u\hat\phi}$};
   \end{axis}
 \end{tikzpicture}
